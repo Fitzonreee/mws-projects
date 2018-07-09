@@ -7,6 +7,7 @@
 
 :root {
   --primary-color: #333;
+  --main-font: 'Montserrat', sans-serif;
 }
 
 @media screen and (min-width: 40em) {
@@ -23,11 +24,13 @@
               Global
 /* ---------------------------- */
 
-body, td, th, p{
-	font-family: Arial, Helvetica, sans-serif;
+
+body, td, th, p { 
 	font-size: 10pt;
 	color: #333;
-	line-height: 1.5;
+  line-height: 1.5;
+  font-family: 'Montserrat', sans-serif;
+  /* font-family: var(--main-font); */
 }
 
 body {
@@ -37,7 +40,6 @@ body {
 }
 
 ul, li {
-	font-family: Arial, Helvetica, sans-serif;
 	font-size: 10pt;
 	color: #333;
 }
@@ -57,8 +59,8 @@ a img {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: Arial, Helvetica, sans-serif;
   margin: 0 0 20px;
+  font-family: 'Montserrat', sans-serif;  
 }
 
 article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
@@ -134,7 +136,6 @@ nav h1 a {
 .filter-options select {
   background-color: white;
   border: 1px solid #fff;
-  font-family: Arial,sans-serif;
   font-size: 11pt;
   height: 35px;
   letter-spacing: 0;
@@ -159,7 +160,6 @@ nav h1 a {
 #restaurants-list li {
   background-color: #fff;
   border: 2px solid #ccc;
-  font-family: Arial,sans-serif;
   min-height: 380px;
   text-align: left;
   margin: 15px;
@@ -193,7 +193,6 @@ nav h1 a {
 
 #restaurants-list li h1 {
   color: #f18200;
-  font-family: Arial,sans-serif;
   font-size: 14pt;
   font-weight: 200;
   letter-spacing: 0;
@@ -303,7 +302,6 @@ nav h1 a {
 
 #restaurant-name {
   color: #f18200;
-  font-family: Arial,sans-serif;
   font-size: 20pt;
   font-weight: 200;
   letter-spacing: 0;
@@ -358,7 +356,14 @@ nav h1 a {
   #restaurant-container {
     width: calc(50% - 4em);
     padding: 0 2em 2em 2em;
-  } 
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .restaurant-img,
+  #restaurant-container {
+    max-width: 800px;
+  }
   
   #reviews-container {
     width: 100%;
