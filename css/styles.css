@@ -123,6 +123,7 @@ nav h1 a {
   align-items: center;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 .filter-options h2 {
@@ -367,6 +368,10 @@ nav h1 a {
   
   #reviews-container {
     width: 100%;
+  }
+
+  .filter-options {
+    flex-direction: row;
   }
 
 }
