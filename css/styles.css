@@ -82,6 +82,10 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
   text-transform: uppercase;
 }
 
+.hidden {
+  display: none;
+}
+
 
 /* ====================== Navigation ====================== */
 
