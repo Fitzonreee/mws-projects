@@ -266,10 +266,6 @@ nav h1 a {
 
 /* ===== Page =====*/
 
-.inside * {
-  /* outline: 1px solid green; */
-}
-
 .inside #main-content {
   display: flex;
   flex-direction: column;
@@ -302,7 +298,8 @@ nav h1 a {
 }
 
 .inside #footer {
-  /* font sizes */
+  /* follow up on */
+  font-size: 2rem;
 }
 
 #restaurant-name {
