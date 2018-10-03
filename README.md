@@ -59,7 +59,7 @@ Most of the code in this project has been written to the ES6 JavaScript specific
 
 ### Offline Availability
 
-- Are pages that have been visited available offline?
+- <s>Are pages that have been visited available offline?</s>
     
-    - When available in the browser, the site uses a service worker to cache responses to requests for site assets. Visited pages are rendered when there is no network access.
+    - <s>When available in the browser, the site uses a service worker to cache responses to requests for site assets. Visited pages are rendered when there is no network access.</s>
 
