@@ -6,8 +6,8 @@
 /* ---------------------------- */
 
 :root {
-  --primary-color: #333;
-  --main-font: 'Montserrat', sans-serif;
+  --primary: #333;
+  --mainfont: 'Montserrat', sans-serif;
 }
 
 @media screen and (min-width: 40em) {
@@ -29,8 +29,8 @@ body, td, th, p {
 	font-size: 16px;
 	color: #333;
   line-height: 1.5;
-  font-family: 'Montserrat', sans-serif;
-  /* font-family: var(--main-font); */
+  /* font-family: 'Montserrat', sans-serif; */
+  font-family: var(--mainfont);
 }
 
 body {
@@ -237,6 +237,7 @@ nav h1 a {
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif !important;
 }
 
 

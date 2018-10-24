@@ -1,3 +1,30 @@
+// dbPromise is assigned result of idb open operation
+/* Open IndexDB instance */
+const dbPromise = idb.open('db-restaurants', 1, upgradeDB => {
+  upgradeDB.createObjectStore('restaurants');
+});
+
+// IndexedDB object with get & set methods
+// https://github.com/jakearchibald/idb
+const idbKeyVal = {
+  get(key) {
+    return dbPromise.then(db => {
+      return db
+        .transaction('restaurants')
+        .objectStore('restaurants')
+        .get(key);
+    });
+  },
+  set(key, val) {
+    return dbPromise.then(db => {
+      const tx = db.transaction('restaurants', 'readwrite');
+      tx.objectStore('restaurants').put(val, key);
+      return tx.complete;
+    });
+  }
+};
+
+
 /**
  * Common database helper functions.
  */
@@ -8,28 +35,51 @@ class DBHelper {
    * Change this to restaurants.json file location on your server.
    */
   static get DATABASE_URL() {
-    const port = 8000 // Change this to your server port
-    return `http://localhost:${port}/data/restaurants.json`;
+    // const port = 8000 // Change this to your server port
+    // return `http://localhost:${port}/data/restaurants.json`;
+    const port = 1337 
+    return `http://localhost:${port}/restaurants`;
   }
 
   /**
    * Fetch all restaurants.
    */
   static fetchRestaurants(callback) {
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET', DBHelper.DATABASE_URL);
-    xhr.onload = () => {
-      if (xhr.status === 200) { // Got a success response from server!
-        const json = JSON.parse(xhr.responseText);
-        const restaurants = json.restaurants;
-        callback(null, restaurants);
-      } else { // Oops!. Got an error from server.
-        const error = (`Request failed. Returned status of ${xhr.status}`);
-        callback(error, null);
-      }
-    };
-    xhr.send();
-  }
+    let url;
+    url = DBHelper.DATABASE_URL;
+    console.log(url);
+
+    fetch(url).then(function(response) {
+      
+      // console.log(response.status);
+      // console.log(response.json());
+
+      return response.json;
+        
+    }).then(function(data) {
+
+      dbPromise.then(function(database) {
+        if(!database) return;
+        idbKeyVal.set('restaurants', data);
+      })
+
+    })
+
+    console.log('Got here!');
+
+  } // end fetchRestaurants
+
+
+
+
+
+  /**
+  * add objectStore to indexDB
+  */
+  static saveFetchedData(dbName, data) {
+    // return - pass in dbName and data
+    // This function does nothing - yet
+  };
 
   /**
    * Fetch a restaurant by its ID.

@@ -22,7 +22,7 @@ self.addEventListener('install', function(event) {
     event.waitUntil(
         caches.open(cacheName).then(
             function(cache) {
-                console.log("ServiceWorker successfully installed!", cache);
+                // console.log("ServiceWorker successfully installed!", cache);
                 return cache.addAll(cacheFiles).catch(function(error){
                     console.log("Error! - ", error);
                 });
@@ -35,7 +35,7 @@ self.addEventListener('install', function(event) {
 
 self.addEventListener('fetch', function(event) {
     var requestURL = new URL(event.request.url);
-    console.log(requestURL);
+    // console.log(requestURL);
     event.respondWith(
         caches.match(event.request).then(function(response) {
             if (response) {

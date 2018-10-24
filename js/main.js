@@ -5,6 +5,12 @@ var newMap
 var markers = []
 
 /**
+ * Fetch posts from server
+ * Use IDB Library to store posts in IndexDB
+ * Do whatever else is necessary
+ */
+
+/**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {
