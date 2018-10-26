@@ -5,71 +5,52 @@ class DBHelper {
 
   /**
    * Database URL.
-   * Change this to restaurants.json file location on your server.
    */
   static get DATABASE_URL() {
-    // const port = 8000 // Change this to your server port
-    // return `http://localhost:${port}/data/restaurants.json`;
+    const port = 8000
+    return `http://localhost:${port}/data/restaurants.json`;
+  }
+
+  /**
+   * API URL.
+   */
+  static get API_URL() {
     const port = 1337 
-    return `http://localhost:${port}/restaurants`;
+    return `http://localhost:${port}`;
   }
 
   /**
    * Fetch all restaurants.
    */
   static fetchRestaurants(callback) {
-    let url;
-    url = DBHelper.DATABASE_URL;
-    console.log(url);
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', `${DBHelper.API_URL}/restaurants`);
+    xhr.onload = () => {
+      if (xhr.status === 200) { // Got a success response from server!
+        const restaurants = JSON.parse(xhr.responseText);
+        callback(null, restaurants);
+      } else { // Oops!. Got an error from server.
+        const error = (`Request failed. Returned status of ${xhr.status}`);
+        callback(error, null);
+      }
+    };
+    xhr.send();
+  }
 
-    fetch(url).then(function(response) {
-      
-      // console.log(response.status);
-      // console.log(response.json());
-
-      return response.json;
-        
-    }).then(function(data) {
-
-      dbPromise.then(function(database) {
-        if(!database) return;
-        idbKeyVal.set('restaurants', data);
-      })
-
-    })
-
-    console.log('Got here!');
-
-  } // end fetchRestaurants
-
-
-
-
-
-  /**
-  * add objectStore to indexDB
-  */
-  static saveFetchedData(dbName, data) {
-    // return - pass in dbName and data
-    // This function does nothing - yet
-  };
 
   /**
    * Fetch a restaurant by its ID.
    */
   static fetchRestaurantById(id, callback) {
-    // fetch all restaurants with proper error handling.
-    DBHelper.fetchRestaurants((error, restaurants) => {
-      if (error) {
-        callback(error, null);
-      } else {
-        const restaurant = restaurants.find(r => r.id == id);
-        if (restaurant) { // Got the restaurant
-          callback(null, restaurant);
-        } else { // Restaurant does not exist in the database
-          callback('Restaurant does not exist', null);
-        }
-      }
+    fetch(`${DBHelper.API_URL}/restaurants/${id}`).then(response => {
+      if(!response.ok) return Promise.reject("Restaurant couldn't be fetched from network");
+      return response.json();
+    }).then(fetchedRestaurant => {
+      // if restaurant could be fetched from network
+      return callback(null, fetchedRestaurant);
+    }).catch(networkError => {
+      // if restaurant could not be fetched from network
+      return callback(networkError, null);
     });
   }
 
@@ -173,7 +154,7 @@ class DBHelper {
    * Restaurant image URL.
    */
   static imageUrlForRestaurant(restaurant) {
-    return (`/img/${restaurant.photograph}`);
+    return (`/img/${restaurant.photograph}.jpg`);
   }
 
   /**
