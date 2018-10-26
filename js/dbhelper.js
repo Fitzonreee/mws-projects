@@ -1,30 +1,3 @@
-// dbPromise is assigned result of idb open operation
-/* Open IndexDB instance */
-const dbPromise = idb.open('db-restaurants', 1, upgradeDB => {
-  upgradeDB.createObjectStore('restaurants');
-});
-
-// IndexedDB object with get & set methods
-// https://github.com/jakearchibald/idb
-const idbKeyVal = {
-  get(key) {
-    return dbPromise.then(db => {
-      return db
-        .transaction('restaurants')
-        .objectStore('restaurants')
-        .get(key);
-    });
-  },
-  set(key, val) {
-    return dbPromise.then(db => {
-      const tx = db.transaction('restaurants', 'readwrite');
-      tx.objectStore('restaurants').put(val, key);
-      return tx.complete;
-    });
-  }
-};
-
-
 /**
  * Common database helper functions.
  */
