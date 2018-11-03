@@ -2,9 +2,12 @@ var cacheName = "restaurantReviews-01";
 var cacheFiles = [
     "/",
     "/restaurant.html",
-    "/css/styles.css",
     "/js/main.js",
     "/js/restaurant_info.js",
+    "/css/styles.css",
+    "/manifest.json",
+    "/img/icon_192.png",
+    "/img/icon_512.png",
     "/img/1.jpg", 
     "/img/2.jpg", 
     "/img/3.jpg", 
@@ -14,7 +17,7 @@ var cacheFiles = [
     "/img/7.jpg", 
     "/img/8.jpg",
     "/img/9.jpg",
-    "/img/10.jpg",
+    "/img/10.jpg"
 ];
 
 self.addEventListener('install', function(event) {
