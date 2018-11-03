@@ -2,6 +2,12 @@
 ---
 #### _Three Stage Course Material Project - Restaurant Reviews_
 
+## For Project Reviewer
+
+1. Make sure you have the Sails server running on Port 1337
+2. You'll need to `npm install` from the root of the folder
+3. Run `gulp sync` from the root as well and the app should fire up with BrowserSync on `localhost:8000`
+
 ## Project Overview: Stage 1
 
 For the **Restaurant Reviews** projects, you will incrementally convert a static webpage to a mobile-ready web application. In **Stage One**, you will take a static design that lacks accessibility and convert the design to be responsive on different sized displays and accessible for screen reader use. You will also add a service worker to begin the process of creating a seamless offline experience for your users.
