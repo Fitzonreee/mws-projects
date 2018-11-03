@@ -4,7 +4,6 @@ var cacheFiles = [
     "/restaurant.html",
     "/css/styles.css",
     "/js/main.js",
-    "/js/dbhelper.js",
     "/js/restaurant_info.js",
     "/img/1.jpg", 
     "/img/2.jpg", 
