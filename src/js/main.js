@@ -1,5 +1,5 @@
 import DBHelper from './dbhelper';
-// import './register-sw';
+import './register-sw';
 
 let restaurants,
   neighborhoods,
