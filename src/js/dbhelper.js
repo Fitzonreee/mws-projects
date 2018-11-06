@@ -24,22 +24,6 @@ export default class DBHelper {
   /**
    * Fetch all restaurants.
    */
-  
-  // static fetchRestaurants(callback) {
-  //   let xhr = new XMLHttpRequest();
-  //   xhr.open('GET', `${DBHelper.API_URL}/restaurants`);
-  //   xhr.onload = () => {
-  //     if (xhr.status === 200) { // Got a success response from server!
-  //       const restaurants = JSON.parse(xhr.responseText);
-  //       callback(null, restaurants);
-  //     } else { // Oops!. Got an error from server.
-  //       const error = (`Request failed. Returned status of ${xhr.status}`);
-  //       callback(error, null);
-  //     }
-  //   };
-  //   xhr.send();
-  // }
-
   static fetchRestaurants(callback) {
     let xhr = new XMLHttpRequest();
     xhr.open('GET', `${DBHelper.API_URL}/restaurants`);
@@ -80,20 +64,6 @@ export default class DBHelper {
   /**
    * Fetch a restaurant by its ID.
    */
-
-  // static fetchRestaurantById(id, callback) {
-  //   fetch(`${DBHelper.API_URL}/restaurants/${id}`).then(response => {
-  //     if(!response.ok) return Promise.reject("Restaurant couldn't be fetched from network");
-  //     return response.json();
-  //   }).then(fetchedRestaurant => {
-  //     // if restaurant could be fetched from network
-  //     return callback(null, fetchedRestaurant);
-  //   }).catch(networkError => {
-  //     // if restaurant could not be fetched from network
-  //     return callback(networkError, null);
-  //   });
-  // }
-
   static fetchRestaurantById(id, callback) {
     fetch(`${DBHelper.API_URL}/restaurants/${id}`).then(response => {
       if (!response.ok) return Promise.reject("Restaurant couldn't be fetched from network");
@@ -111,8 +81,6 @@ export default class DBHelper {
       });
     });
   }
-
-
 
   /**
    * Fetch restaurants by a cuisine type with proper error handling.
@@ -231,17 +199,26 @@ export default class DBHelper {
       })
       marker.addTo(map);
     return marker;
-  } 
-  /* static mapMarkerForRestaurant(restaurant, map) {
-    const marker = new google.maps.Marker({
-      position: restaurant.latlng,
-      title: restaurant.name,
-      url: DBHelper.urlForRestaurant(restaurant),
-      map: map,
-      animation: google.maps.Animation.DROP}
-    );
-    return marker;
-  } */
+  }
+  
+    /**
+   * Fetch Reviews by restaurant id
+   */
+  static fetchReviewsByRestaurantId(restaurant_id) {
+    return fetch(`${DBHelper.API_URL}/reviews/?restaurant_id=${restaurant_id}`).then(response => {
+      if (!response.ok) return Promise.reject("Reviews couldn't be fetched from network");
+      return response.json();
+    }).then(fetchedReviews => {
+      // if reviews could be fetched from network:
+      // TODO: store reviews on idb
+      return fetchedReviews;
+    }).catch(networkError => {
+      // if reviews couldn't be fetched from network:
+      // TODO: try to get reviews from idb
+      console.log(`${networkError}`);
+      return null; // return null to handle error, as though there are no reviews.
+    });
+  }
 
 }
 

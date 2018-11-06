@@ -1,5 +1,5 @@
 import DBHelper from './dbhelper';
-import './register-sw';
+// import './register-sw';
 
 let restaurant;
 var newMap;
@@ -38,22 +38,6 @@ const initMap = () => {
   });
 }  
  
-/* window.initMap = () => {
-  fetchRestaurantFromURL((error, restaurant) => {
-    if (error) { // Got an error!
-      console.error(error);
-    } else {
-      self.map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 16,
-        center: restaurant.latlng,
-        scrollwheel: false
-      });
-      fillBreadcrumb();
-      DBHelper.mapMarkerForRestaurant(self.restaurant, self.map);
-    }
-  });
-} */
-
 /**
  * Get current restaurant from page URL.
  */
@@ -102,7 +86,8 @@ const fillRestaurantHTML = (restaurant = self.restaurant) => {
     fillRestaurantHoursHTML();
   }
   // fill reviews
-  fillReviewsHTML();
+  DBHelper.fetchReviewsByRestaurantId(restaurant.id)
+  .then(fillReviewsHTML);
 }
 
 /**
@@ -157,7 +142,7 @@ const createReviewHTML = (review) => {
   li.appendChild(name);
 
   const date = document.createElement('p');
-  date.innerHTML = review.date;
+  date.innerHTML = new Date(review.createdAt).toLocaleDateString();
   li.appendChild(date);
 
   const rating = document.createElement('p');
