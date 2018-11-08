@@ -1,5 +1,7 @@
 import DBHelper from './dbhelper';
+import favoriteButton from './favorite-button';
 import './register-sw';
+
 
 let restaurants,
   neighborhoods,
@@ -160,6 +162,10 @@ const createRestaurantHTML = (restaurant) => {
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
   image.alt = `${restaurant.name} in ${restaurant.neighborhood}`;
   li.append(image);
+
+  // style this
+  const favButton = favoriteButton(restaurant);
+  li.append(favButton);
 
   const name = document.createElement('h1');
   name.innerHTML = restaurant.name;

@@ -1,4 +1,5 @@
 import DBHelper from './dbhelper';
+import favoriteButton from './favorite-button';
 import './register-sw';
 
 let restaurant;
@@ -77,6 +78,9 @@ const fillRestaurantHTML = (restaurant = self.restaurant) => {
   image.className = 'restaurant-img'
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
   image.alt = `${restaurant.name} in ${restaurant.neighborhood}`;
+
+  const favButtonContainer = document.getElementById('fav-button-container');
+  favButtonContainer.append( favoriteButton(restaurant) );
 
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;

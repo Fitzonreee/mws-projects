@@ -247,6 +247,24 @@ nav h1 a {
        Restaurant-Details
 /* ---------------------------- */
 
+/* ===== Favorite Button =====*/
+
+/* Default button style when not toggled */
+button.fav {
+  border-radius: 10px;
+}
+/* Button style when button is toggled */
+button.fav[aria-pressed=true] {
+  background-color: #3397DB;
+}
+/* Accessible and easy to spot styles for our buttons when hovered and focused */
+button.fav:hover,
+button.fav:focus {
+  border-color: #3397db;
+}
+
+/* ===== Breadcrumbs =====*/
+
 #breadcrumb {
   padding: 10px 40px 16px;
   list-style: none;
