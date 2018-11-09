@@ -7,7 +7,7 @@
 1. Make sure you have the Sails server running on Port 1337
 2. You'll need to `npm install` from the root of the folder
 3. Run `gulp sync` from the root as well and the app should fire up with BrowserSync on `localhost:8000`
-4. I've included a screenshot in the root of the diretly of the Lighthouse report from my machine
+4. I've included a screenshot in the root of the diretly of the Lighthouse report from my machine called `lighthouse-audit.png`
 
 ## Project Overview: Stage 1
 
@@ -36,3 +36,8 @@ This repository uses [leafletjs](https://leafletjs.com/) with [Mapbox](https://w
 Most of the code in this project has been written to the ES6 JavaScript specification for compatibility with modern web browsers and future proofing JavaScript code. As much as possible, try to maintain use of ES6 in any additional JavaScript you write. 
 
 
+### TO DO
+
+1. Clean up some styling - breadcrumbs, favorite icon, review form
+2. Sync favorites
+3. Sync reviews

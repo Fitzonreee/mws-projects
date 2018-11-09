@@ -72,6 +72,13 @@ const dbPromise = {
       const storeIndex = db.transaction('reviews').objectStore('reviews').index('restaurant_id');
       return storeIndex.getAll(Number(id));
     });
+  },
+
+  /**
+   * Sync favorite restaurants
+   */
+  syncFavorites() {
+
   }
 
 };
