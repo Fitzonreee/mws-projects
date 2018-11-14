@@ -10,15 +10,18 @@ const dbPromise = {
       upgradeDb.createObjectStore('reviews', { keyPath: 'id'})
         .createIndex('restaurant_id', 'restaurant_id');
         
-        // case 2:
-        // const putRequestStore = upgradeDb.createObjectStore('syncFavorites', {autoIncrement: true});
+    //  case 2:
+    //     const putRequestStore = upgradeDb.createObjectStore('syncFavorites', {autoIncrement: true});
+        
         // Using the restaurant id as key will allow me to easily update local iDB data,
         // remove successful put requests, and even handle last chance Background Syncs.
         // Another plus, is that if the user toggles the favorite button
         // more than once while offline, only the latest action will be synced, saving requests.
   
       // Store an object instead of a URL: {restaurant_id: id, url: "url"}
-      //   const syncFavoriteStore = upgradeDb.createObjectStore('syncFavorites', {keyPath: 'restaurant_id'});
+        
+      // const syncFavoriteStore = upgradeDb.createObjectStore('syncFavorites', {keyPath: 'restaurant_id'});
+      
       // case 3:
       //   const offlineReviewStore = upgradeDb.createObjectStore('offlineReviews', {keyPath: 'id', autoIncrement: true});
       //   offlineReviewStore.createIndex('restaurant_id', 'restaurant_id');
@@ -100,8 +103,7 @@ const dbPromise = {
     }
 
     // Update data in idb 
-    // You need to update two properties - isfavorite and updatedAt
-      // For updatedAt you can use - new Date().toISOString
+    // You need to update two properties - isfavorite and updatedAt - For updatedAt you can use - new Date().toISOString
 
     // In a new idb store named offline-favorites, store the restaurant id and the value of isfavorite
     // so it can be synced using Background sync later
