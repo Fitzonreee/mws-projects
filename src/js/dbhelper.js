@@ -31,16 +31,24 @@ export default class DBHelper {
       if (xhr.status === 200) { // Got a success response from server!
         const restaurants = JSON.parse(xhr.responseText);
         dbPromise.putRestaurants(restaurants);
+        
+        // This prints restaurants 3 times - same as the # of errors
+        // console.log(restaurants);
+        
         callback(null, restaurants);
+
       } else { // Oops!. Got an error from server.
         console.log(`Request failed. Returned status of ${xhr.status}, trying idb...`);
         // if xhr request isn't code 200, try idb
         dbPromise.getRestaurants().then(idbRestaurants => {
           // if we get back more than 1 restaurant from idb, return idbRestaurants
           if (idbRestaurants.length > 0) {
-            callback(null, idbRestaurants)
+            callback(null, idbRestaurants);
+            console.log("Got all restaurants..."); // Not showing
+            
           } else { // if we got back 0 restaurants return an error
             callback('No restaurants found in idb', null);
+            console.log("Got 0 restaurants...");
           }
         });
       }
