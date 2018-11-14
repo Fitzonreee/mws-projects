@@ -95,6 +95,7 @@ function handleSubmit(e) {
   };
 
   // TODO: use Background Sync to sync data with API server
+  
   return fetch(url, POST).then(response => {
     if (!response.ok) return Promise.reject("We couldn't post review to server.");
     return response.json();
