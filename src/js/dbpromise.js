@@ -10,18 +10,18 @@ const dbPromise = {
       upgradeDb.createObjectStore('reviews', { keyPath: 'id'})
         .createIndex('restaurant_id', 'restaurant_id');
         
-        case 2:
+        // case 2:
         // const putRequestStore = upgradeDb.createObjectStore('syncFavorites', {autoIncrement: true});
         // Using the restaurant id as key will allow me to easily update local iDB data,
         // remove successful put requests, and even handle last chance Background Syncs.
         // Another plus, is that if the user toggles the favorite button
         // more than once while offline, only the latest action will be synced, saving requests.
   
-        // Store an object instead of a URL: {restaurant_id: id, url: "url"}
-        const syncFavoriteStore = upgradeDb.createObjectStore('syncFavorites', {keyPath: 'restaurant_id'});
-      case 3:
-        const offlineReviewStore = upgradeDb.createObjectStore('offlineReviews', {keyPath: 'id', autoIncrement: true});
-        offlineReviewStore.createIndex('restaurant_id', 'restaurant_id');
+      // Store an object instead of a URL: {restaurant_id: id, url: "url"}
+      //   const syncFavoriteStore = upgradeDb.createObjectStore('syncFavorites', {keyPath: 'restaurant_id'});
+      // case 3:
+      //   const offlineReviewStore = upgradeDb.createObjectStore('offlineReviews', {keyPath: 'id', autoIncrement: true});
+      //   offlineReviewStore.createIndex('restaurant_id', 'restaurant_id');
    
     }
   }),
@@ -95,6 +95,8 @@ const dbPromise = {
 
     if(!window.syncManager || !navigator.serviceWorker) {
       // Do a regular fetch to the PUT API endpoint
+    } else {
+
     }
 
     // Update data in idb 
@@ -113,10 +115,8 @@ const dbPromise = {
     // If the user is offline, it will happen when the browser decides
     // That's why we needed to update the data on idb in step 2 - so the info is available
 
-    // 
-
-
-    
+    // Still in the Service Worker, for each PUT request that is successful - with the data we get back from the server
+    // we forcibly update the restaurant in idb and .then we remove the offline-favorite record for the specific questions
 
   },
 
@@ -124,6 +124,34 @@ const dbPromise = {
    * Offline - Sync favorite restaurants
    */
   syncReviews() {
+
+    if(!window.syncManager || !navigator.serviceWorker) {
+      // Do a regular fetch to the PUT API endpoint
+    } else {
+
+    }
+
+    // In a new idb stroe, called offline-reviews store this new review so it is available offline
+    // and Background Sync knows what data needs to be POSTED
+    // You will have to refactor your code for fetching reviews - so it includes all reviews from this store
+
+      // Note that this store will also need to have an index for restaurant_id - as we'll need to access offline reviews for specific restaurants
+      // This has to be a key pair store, meaning that data will have an auto-incremented key as its id, and the value will be the review object
+      // Since we're not going to store an in in the object, the id won't be inside like in previous stores
+      // You can use autoIncrement: true like so - upgradeDb.createObjectStore('offline-reviews', {autoIncrement: true})
+
+    // Register for a background sync with name Sync Reviews
+
+    // In the service worker, listen for background syncs with the name syncReviews
+      // When triggered, open offline-reviews and for every record in the store, do a POST fetch request using it's data
+      // When offline, data will sync instantly
+
+    // Still in the service worker, for each successful POST request, store the new review in the reviews store, and delete the offline-review record
+
+
+
+
+
 
   }
 
