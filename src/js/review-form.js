@@ -107,6 +107,10 @@ function handleSubmit(e) {
     reviewList.appendChild(review);
     // clear form
     clearForm();
+  }).catch(err => {
+   // We're offline
+   console.log("You are offline!");
+   // Save Review to local DB
   });
 
 }
