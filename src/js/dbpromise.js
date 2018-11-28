@@ -65,6 +65,25 @@ const dbPromise = {
   },
 
   /**
+   * Save OFFLINE reviews into NEW idb, using promises
+   */
+  putReviews(reviews) {
+    if (!reviews.push) reviews = [reviews];
+    return this.db.then(db => {
+      const store = db.transaction('reviews', 'readwrite').objectStore('offline-reviews');
+      Promise.all(reviews.map(networkReview => {
+        return store.get(networkReview.id).then(idbReview => {
+          if (!idbReview || new Date(networkReview.updatedAt) > new Date(idbReview.updatedAt)) {
+            return store.put(networkReview);
+          }
+        });
+      })).then(function () {
+        return store.complete;
+      });
+    });
+  },
+
+  /**
    * Get all reviews for a specific restaurant, by its id, using promises.
    */
   getReviewsForRestaurant(id) {
@@ -132,10 +151,6 @@ const dbPromise = {
       // When offline, data will sync instantly
 
     // Still in the service worker, for each successful POST request, store the new review in the reviews store, and delete the offline-review record
-
-
-
-
 
 
   }

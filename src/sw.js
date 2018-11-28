@@ -35,25 +35,26 @@ self.addEventListener('install', function(event) {
     )
 });
 
-// self.addEventListener('fetch', function(event) {
-//     var requestURL = new URL(event.request.url);
-//     // console.log(requestURL);
-//     event.respondWith(
-//         caches.match(event.request).then(function(response) {
-//             if (response) {
-//                 return response;
-//             }
-//             var fetchRequest = event.request.clone();
-//             return fetch(fetchRequest).then(function(response) {
-//                 if (!response) {
-//                     return response;
-//                 }
-//                 var responseCaching = response.clone();
-//                 caches.open(cacheName).then(function(cache) {
-//                     cache.put(event.request, responseCaching);
-//                 })
-//                 return response;
-//             })
-//         })
-//     )
-// });
+self.addEventListener('fetch', function(event) {
+    var requestURL = new URL(event.request.url);
+    // console.log(requestURL);
+    event.respondWith(
+        caches.match(event.request).then(function(response) {
+            if (response) {
+                return response;
+            }
+            var fetchRequest = event.request.clone();
+            return fetch(fetchRequest).then(function(response) {
+                if (!response) {
+                    return response;
+                }
+                var responseCaching = response.clone();
+                caches.open(cacheName).then(function(cache) {
+                    cache.put(event.request, responseCaching);
+                })
+                return response;
+            })
+        })
+    )
+});
+

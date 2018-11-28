@@ -1,6 +1,7 @@
 import DBHelper from "./dbhelper";
 import dbPromise from "./dbpromise";
 
+
 /**
  * Returns a li element with review data so it can be appended to 
  * the review list.
@@ -86,7 +87,7 @@ function handleSubmit(e) {
   const review = validateAndGetData();
   if (!review) return;
 
-  console.log(review);
+  // console.log(review);
 
   const url = `${DBHelper.API_URL}/reviews/`;
   const POST = {
@@ -97,7 +98,9 @@ function handleSubmit(e) {
   // TODO: use Background Sync to sync data with API server
   return fetch(url, POST).then(response => {
     if (!response.ok) return Promise.reject("We couldn't post review to server.");
+    // Is this successfully posting to the server - it is not
     return response.json();
+
   }).then(newNetworkReview => {
     // save new review on idb
     dbPromise.putReviews(newNetworkReview);
@@ -107,13 +110,86 @@ function handleSubmit(e) {
     reviewList.appendChild(review);
     // clear form
     clearForm();
+  
   }).catch(err => {
-   // We're offline
-   console.log("You are offline!");
-   // Save Review to local DB
+    // We're offline
+    console.log("You are offline!");
+
+    console.log(review);
+
+    console.log('It either worked or is undefined.');
+    
+
+    // Do the same thing exact thing as above - but in new Object Store
+    // Why can't it be the same object store?
+    // Or, create putOfflineReviews function?
+    // save new review on idb
+
+    
+
+    
   });
 
 }
+
+  // POST
+  // http://localhost:1337/reviews/
+  // function createRestaurantReview(restaurant_id, name, rating, comments, callback) {
+  //   const url = `${DBHelper.DATABASE_URL}/restaurants/${restaurant_id}/reviews`;
+  //   console.log(url);
+  //   const method = 'POST';
+  //   const headers = DBHelper.DB_HEADERS;
+
+  //   const data = {
+  //     name: name,
+  //     rating: +rating,
+  //     comments: comments
+  //   };
+  //   const body = JSON.stringify(data);
+    
+  //   fetch(url, {
+  //     headers: headers,
+  //     method: method,
+  //     body: body
+  //   })
+  //     .then(response => response.json())
+  //     .then(data => callback(null, data))
+  //     .catch(err => {
+  //       // We are offline...
+  //       // Save review to local IDB
+  //       DBHelper.createIDBReview(data)
+  //         .then(review_key => {
+  //           // Get review_key and save it with review to offline queue
+  //           console.log('returned review_key', review_key);
+  //           DBHelper.addRequestToQueue(url, headers, method, data, review_key)
+  //             .then(offline_key => console.log('returned offline_key', offline_key));
+  //         });
+  //       callback(err, null);
+  //     });
+  // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * Returns a form element for posting new reviews.
