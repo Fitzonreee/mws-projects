@@ -9,6 +9,9 @@ const dbPromise = {
      case 1:
       upgradeDb.createObjectStore('reviews', { keyPath: 'id'})
         .createIndex('restaurant_id', 'restaurant_id');
+      case 2:
+      upgradeDb.createObjectStore('offline-reviews', { keyPath: 'id'})
+        .createIndex('restaurant_id', 'restaurant_id');
    }
  }),
 
@@ -52,6 +55,25 @@ const dbPromise = {
     if (!reviews.push) reviews = [reviews];
     return this.db.then(db => {
       const store = db.transaction('reviews', 'readwrite').objectStore('reviews');
+      Promise.all(reviews.map(networkReview => {
+        return store.get(networkReview.id).then(idbReview => {
+          if (!idbReview || new Date(networkReview.updatedAt) > new Date(idbReview.updatedAt)) {
+            return store.put(networkReview);
+          }
+        });
+      })).then(function () {
+        return store.complete;
+      });
+    });
+  },
+
+  /**
+   * Save a OFFLINE REVIEW or array of reviews into a NEW idb, using promises
+   */
+  putOfflineReviews(reviews) {
+    if (!reviews.push) reviews = [reviews];
+    return this.db.then(db => {
+      const store = db.transaction('offline-reviews', 'readwrite').objectStore('offline-reviews');
       Promise.all(reviews.map(networkReview => {
         return store.get(networkReview.id).then(idbReview => {
           if (!idbReview || new Date(networkReview.updatedAt) > new Date(idbReview.updatedAt)) {
@@ -118,6 +140,7 @@ const dbPromise = {
 
     // In a new idb stroe, called offline-reviews store this new review so it is available offline
     // and Background Sync knows what data needs to be POSTED
+    
     // You will have to refactor your code for fetching reviews - so it includes all reviews from this store
 
       // Note that this store will also need to have an index for restaurant_id - as we'll need to access offline reviews for specific restaurants

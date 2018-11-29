@@ -86,7 +86,7 @@ function handleSubmit(e) {
   const review = validateAndGetData();
   if (!review) return;
 
-  console.log(review);
+  // console.log(review);
 
   const url = `${DBHelper.API_URL}/reviews/`;
   const POST = {
@@ -108,6 +108,19 @@ function handleSubmit(e) {
     reviewList.appendChild(review);
     // clear form
     clearForm();
+  }).catch(err => {
+    // We're offline
+    console.log("You are offline!");
+    console.log(review);
+
+    dbPromise.putOfflineReviews(review);
+    // post new review on page
+    const reviewList = document.getElementById('reviews-list');
+    const review = createReviewHTML(newNetworkReview);
+    reviewList.appendChild(review);
+    // clear form
+    clearForm();
+
   });
 
 }
